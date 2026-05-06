@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Attendance System — Live App</title>
+  <meta name="description" content="Face recognition based attendance system — Register students, take attendance, and view records." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="app.css" />
+</head>
+<body>
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="index.html" class="nav-logo">
+        <span class="logo-icon">🎯</span>
+        <span class="logo-text">SmartAttendAI</span>
+      </a>
+      <div class="nav-right">
+        <a href="index.html" class="back-link">← Back to Report</a>
+        <div class="status-indicator" id="modelStatus">
+          <span class="status-dot loading"></span>
+          <span class="status-label">Loading AI Models...</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== MAIN APP ===== -->
+  <main class="app-main">
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loader-content">
+        <div class="spinner"></div>
+        <h2>Loading AI Models</h2>
+        <p>Preparing face detection & recognition...</p>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p class="progress-text" id="progressText">0%</p>
+      </div>
+    </div>
+
+    <!-- Tab Navigation -->
+    <div class="tab-bar">
+      <button class="tab-btn active" data-tab="register" id="tabRegister">
+        <span class="tab-icon">📸</span>
+        <span class="tab-label">Register Student</span>
+      </button>
+      <button class="tab-btn" data-tab="attendance" id="tabAttendance">
+        <span class="tab-icon">✅</span>
+        <span class="tab-label">Take Attendance</span>
+      </button>
+      <button class="tab-btn" data-tab="records" id="tabRecords">
+        <span class="tab-icon">📊</span>
+        <span class="tab-label">View Records</span>
+      </button>
+    </div>
+
+    <!-- ===== TAB: REGISTER ===== -->
+    <section class="tab-content active" id="panelRegister">
+      <div class="panel-header">
+        <h1>Register New Student</h1>
+        <p>Capture <strong>5 face photos</strong> via webcam <strong>or upload from files</strong> for accurate recognition.</p>
+      </div>
+      <div class="register-layout">
+        <div class="camera-section">
+          <div class="video-wrapper" id="registerVideoWrapper">
+            <video id="registerVideo" autoplay muted playsinline></video>
+            <canvas id="registerOverlay"></canvas>
+            <div class="video-placeholder" id="registerPlaceholder">
+              <span>📷</span>
+              <p>Click "Start Camera" to begin</p>
+            </div>
+          </div>
+          <!-- Capture Progress Bar -->
+          <div class="capture-progress-section" id="captureProgress">
+            <div class="capture-progress-header">
+              <span>📸 Face Capture Progress</span>
+              <span class="capture-count-text" id="captureCountText">0 / 5 captured</span>
+            </div>
+            <div class="capture-progress-bar">
+              <div class="capture-progress-fill" id="captureProgressFill"></div>
+            </div>
+            <div class="capture-gallery" id="captureGallery"></div>
+          </div>
+          <div class="camera-controls">
+            <button class="btn btn-primary" id="btnStartRegisterCam">
+              <span>🎥</span> Start Camera
+            </button>
+            <button class="btn btn-accent" id="btnCaptureFace" disabled>
+              <span>📸</span> Capture 1 of 5
+            </button>
+            <button class="btn btn-ghost" id="btnResetCaptures" type="button">
+              🔄 Reset
+            </button>
+          </div>
+          <!-- File Upload Option -->
+          <div class="upload-section">
+            <div class="upload-divider"><span>OR</span></div>
+            <label class="upload-area" for="fileUploadInput">
+              <span class="upload-icon">📁</span>
+              <span class="upload-text">Upload Photos from Files</span>
+              <span class="upload-hint">Select up to 5 face images (JPG, PNG)</span>
+              <input type="file" id="fileUploadInput" accept="image/*" multiple hidden />
+            </label>
+          </div>
+        </div>
+        <div class="register-form">
+          <div class="captured-preview" id="capturedPreview">
+            <div class="preview-placeholder">
+              <span>👤</span>
+              <p>Capture 5 face photos</p>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="studentName">Student Name</label>
+            <input type="text" id="studentName" placeholder="Enter full name..." />
+          </div>
+          <div class="form-group">
+            <label for="studentId">Student ID (Optional)</label>
+            <input type="text" id="studentId" placeholder="Enter student ID..." />
+          </div>
+          <button class="btn btn-success btn-full" id="btnRegister" disabled>
+            ✅ Register Student (after 5 captures)
+          </button>
+          <div class="registered-count">
+            <span>📋 Registered Students:</span>
+            <span class="count-badge" id="registeredCount">0</span>
+          </div>
+        </div>
+      </div>
+      <!-- Registered Students List -->
+      <div class="registered-list-section">
+        <h2>Registered Students</h2>
+        <div class="registered-list" id="registeredList">
+          <p class="empty-msg">No students registered yet.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TAB: ATTENDANCE ===== -->
+    <section class="tab-content" id="panelAttendance">
+      <div class="panel-header">
+        <h1>Take Attendance</h1>
+        <p>Face the camera. The system will automatically detect and match your face.</p>
+      </div>
+      <div class="attendance-layout">
+        <div class="camera-section attendance-camera">
+          <div class="video-wrapper" id="attendanceVideoWrapper">
+            <video id="attendanceVideo" autoplay muted playsinline></video>
+            <canvas id="attendanceOverlay"></canvas>
+            <div class="video-placeholder" id="attendancePlaceholder">
+              <span>📷</span>
+              <p>Click "Start Camera" to begin</p>
+            </div>
+          </div>
+          <div class="camera-controls">
+            <button class="btn btn-primary" id="btnStartAttendanceCam">
+              <span>🎥</span> Start Camera
+            </button>
+            <button class="btn btn-accent" id="btnMarkAttendance" disabled>
+              <span>✅</span> Mark Attendance
+            </button>
+          </div>
+        </div>
+        <div class="attendance-result">
+          <div class="result-card" id="resultCard">
+            <div class="result-placeholder">
+              <span>🔍</span>
+              <h3>Waiting for Recognition...</h3>
+              <p>Start the camera and click "Mark Attendance" to scan your face.</p>
+            </div>
+          </div>
+          <div class="today-attendance">
+            <h3>📅 Today's Attendance — <span id="todayDate"></span></h3>
+            <div class="today-list" id="todayList">
+              <p class="empty-msg">No attendance marked yet today.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TAB: RECORDS ===== -->
+    <section class="tab-content" id="panelRecords">
+      <div class="panel-header">
+        <h1>Attendance Records</h1>
+        <p>View complete attendance history and download day-wise PDF reports.</p>
+      </div>
+      <div class="records-controls">
+        <div class="form-group">
+          <label for="filterDate">Filter by Date</label>
+          <input type="date" id="filterDate" />
+        </div>
+        <div class="form-group">
+          <label for="filterStudent">Filter by Student</label>
+          <select id="filterStudent">
+            <option value="">All Students</option>
+          </select>
+        </div>
+        <button class="btn btn-ghost" id="btnShowAll">Show All</button>
+        <button class="btn btn-primary" id="btnDownloadPDF">
+          📄 Download PDF Report
+        </button>
+        <button class="btn btn-danger" id="btnClearRecords">🗑️ Clear All Records</button>
+      </div>
+      <div class="records-table-wrap">
+        <table class="records-table" id="recordsTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Student Name</th>
+              <th>Student ID</th>
+              <th>Attendance Count</th>
+              <th>Last Marked</th>
+            </tr>
+          </thead>
+          <tbody id="recordsBody">
+            <tr>
+              <td colspan="5" class="empty-msg">No records found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- face-api.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+  <!-- jsPDF for PDF report generation -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

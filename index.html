@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Attendance System using Face Recognition</title>
+  <meta name="description" content="A comprehensive project report on the Smart Attendance System using Face Recognition — automated, contactless, and accurate attendance tracking." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#hero" class="nav-logo">
+        <span class="logo-icon">🎯</span>
+        <span class="logo-text">SmartAttendAI</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#introduction">Introduction</a></li>
+        <li><a href="#problem">Problem</a></li>
+        <li><a href="#objectives">Objectives</a></li>
+        <li><a href="#architecture">Architecture</a></li>
+        <li><a href="#technologies">Tech Stack</a></li>
+        <li><a href="#workflow">Workflow</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+        <li><a href="app.html" style="color:#22d3ee;font-weight:700;">🚀 Live App</a></li>
+      </ul>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg-effects">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="grid-overlay"></div>
+    </div>
+    <div class="hero-container">
+      <div class="hero-content">
+        <span class="badge fade-up">📘 College Project Report</span>
+        <h1 class="hero-title fade-up delay-1">
+          Smart Attendance System<br />
+          <span class="gradient-text">using Face Recognition</span>
+        </h1>
+        <p class="hero-subtitle fade-up delay-2">
+          An automated, contactless, and real-time attendance tracking system powered by Python, OpenCV, and AI-based face recognition technology.
+        </p>
+        <div class="hero-cta fade-up delay-3">
+          <a href="app.html" class="btn btn-primary">
+            <span>🚀 Launch Live App</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17l9.2-9.2M17 17V7.8H7.8"/></svg>
+          </a>
+          <a href="#introduction" class="btn btn-ghost">Explore Report</a>
+          <a href="#technologies" class="btn btn-ghost">View Tech Stack</a>
+        </div>
+        <div class="hero-stats fade-up delay-4">
+          <div class="stat"><span class="stat-value">99%</span><span class="stat-label">Accuracy</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><span class="stat-value">&lt;1s</span><span class="stat-label">Detection</span></div>
+          <div class="stat-divider"></div>
+          <div class="stat"><span class="stat-value">0</span><span class="stat-label">Proxy Risk</span></div>
+        </div>
+      </div>
+      <div class="hero-visual fade-up delay-2">
+        <div class="hero-image-wrapper">
+          <img src="hero.png" alt="Face Recognition Illustration" class="hero-image" />
+          <div class="scan-line"></div>
+        </div>
+      </div>
+    </div>
+    <a href="#introduction" class="scroll-indicator">
+      <span>Scroll Down</span>
+      <div class="scroll-arrow"></div>
+    </a>
+  </section>
+
+  <!-- ===== INTRODUCTION ===== -->
+  <section class="section" id="introduction">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">01</span>
+        <h2 class="section-title">Introduction</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="content-grid">
+        <div class="content-card glass-card">
+          <div class="card-icon">📋</div>
+          <h3>What is this project?</h3>
+          <p>The <strong>Smart Attendance System using Face Recognition</strong> is an automated solution that uses a camera and artificial intelligence to identify students or employees and mark their attendance automatically — without any manual effort.</p>
+        </div>
+        <div class="content-card glass-card">
+          <div class="card-icon">⚠️</div>
+          <h3>Why traditional systems fail</h3>
+          <p>Old methods like roll calls and sign-in sheets waste time, are prone to errors, and allow proxy attendance. These systems fail to keep pace with modern institutional needs.</p>
+        </div>
+        <div class="content-card glass-card">
+          <div class="card-icon">✨</div>
+          <h3>Face recognition overview</h3>
+          <p>Face recognition uses AI algorithms to analyze facial features from a camera feed, compare them against a stored database, and verify identity instantly — making attendance fast, secure, and touchless.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PROBLEM STATEMENT ===== -->
+  <section class="section section-dark" id="problem">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">02</span>
+        <h2 class="section-title">Problem Statement</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="problem-grid">
+        <div class="problem-card">
+          <div class="problem-icon">⏱️</div>
+          <h3>Time-Consuming</h3>
+          <p>Taking attendance manually eats into valuable class time — especially in large classrooms with 60+ students.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">👤</div>
+          <h3>Proxy Attendance</h3>
+          <p>Students can easily mark attendance for their absent friends. There is no reliable way to verify physical presence.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">❌</div>
+          <h3>Human Errors</h3>
+          <p>Teachers may accidentally skip a name, mark incorrectly, or lose paper registers entirely.</p>
+        </div>
+        <div class="problem-card">
+          <div class="problem-icon">🔄</div>
+          <h3>Need for Automation</h3>
+          <p>Modern institutions need a fast, accurate, and digital attendance solution that eliminates all manual overhead.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OBJECTIVES ===== -->
+  <section class="section" id="objectives">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">03</span>
+        <h2 class="section-title">Objectives</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="objectives-list">
+        <div class="objective-item glass-card">
+          <div class="obj-number">01</div>
+          <div class="obj-content">
+            <h3>Automate Attendance</h3>
+            <p>Replace manual roll calls with automated face recognition-based attendance marking.</p>
+          </div>
+        </div>
+        <div class="objective-item glass-card">
+          <div class="obj-number">02</div>
+          <div class="obj-content">
+            <h3>Reduce Human Effort</h3>
+            <p>Minimize the time and work required from teachers and administrators.</p>
+          </div>
+        </div>
+        <div class="objective-item glass-card">
+          <div class="obj-number">03</div>
+          <div class="obj-content">
+            <h3>Improve Accuracy & Security</h3>
+            <p>Eliminate proxy attendance and ensure only physically present individuals are recorded.</p>
+          </div>
+        </div>
+        <div class="objective-item glass-card">
+          <div class="obj-number">04</div>
+          <div class="obj-content">
+            <h3>Real-Time Tracking</h3>
+            <p>Mark attendance instantly the moment a person's face is detected and recognized.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SYSTEM ARCHITECTURE ===== -->
+  <section class="section section-dark" id="architecture">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">04</span>
+        <h2 class="section-title">System Architecture</h2>
+        <div class="section-line"></div>
+      </div>
+      <p class="section-desc">The system follows a sequential pipeline — from video capture to attendance storage.</p>
+      <div class="architecture-flow">
+        <div class="arch-step">
+          <div class="arch-icon">📷</div>
+          <h4>Webcam Input</h4>
+          <p>Camera captures live video feed frame by frame.</p>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-step">
+          <div class="arch-icon">🔍</div>
+          <h4>Face Detection</h4>
+          <p>OpenCV's Haar Cascade locates human faces in each frame.</p>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-step">
+          <div class="arch-icon">🧠</div>
+          <h4>Face Recognition</h4>
+          <p>LBPH algorithm matches detected face with the trained dataset.</p>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-step">
+          <div class="arch-icon">✅</div>
+          <h4>Attendance Mark</h4>
+          <p>If recognized, name and timestamp are recorded automatically.</p>
+        </div>
+        <div class="arch-arrow">→</div>
+        <div class="arch-step">
+          <div class="arch-icon">💾</div>
+          <h4>Data Storage</h4>
+          <p>Attendance saved to CSV file or database for later retrieval.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TECHNOLOGIES USED ===== -->
+  <section class="section" id="technologies">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">05</span>
+        <h2 class="section-title">Technologies Used</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="tech-grid">
+        <div class="tech-card glass-card">
+          <div class="tech-logo">🐍</div>
+          <h3>Python</h3>
+          <p>Core programming language — simple, powerful, with extensive AI/ML library support.</p>
+        </div>
+        <div class="tech-card glass-card">
+          <div class="tech-logo">👁️</div>
+          <h3>OpenCV</h3>
+          <p>Computer vision library for accessing the webcam, detecting and processing faces.</p>
+        </div>
+        <div class="tech-card glass-card">
+          <div class="tech-logo">🔢</div>
+          <h3>NumPy</h3>
+          <p>Handles mathematical computations and image data as multi-dimensional arrays.</p>
+        </div>
+        <div class="tech-card glass-card">
+          <div class="tech-logo">📊</div>
+          <h3>Pandas</h3>
+          <p>Creates and manages tabular attendance records like Excel spreadsheets.</p>
+        </div>
+        <div class="tech-card glass-card">
+          <div class="tech-logo">🌐</div>
+          <h3>Streamlit</h3>
+          <p>Builds the user-friendly web dashboard interface for interaction.</p>
+        </div>
+        <div class="tech-card glass-card">
+          <div class="tech-logo">🧠</div>
+          <h3>LBPH Algorithm</h3>
+          <p>Local Binary Patterns Histograms — recognizes faces by analyzing texture patterns.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WORKING PROCESS ===== -->
+  <section class="section section-dark" id="workflow">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">06</span>
+        <h2 class="section-title">Working Process</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-marker">1</div>
+          <div class="timeline-content glass-card">
+            <h3>Capturing Student Images</h3>
+            <p>The webcam captures multiple photos of each student's face from different angles for better training accuracy.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">2</div>
+          <div class="timeline-content glass-card">
+            <h3>Storing the Dataset</h3>
+            <p>Captured images are saved in organized folders labeled with each student's ID and name.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">3</div>
+          <div class="timeline-content glass-card">
+            <h3>Training the Model</h3>
+            <p>The LBPH recognizer analyzes the stored images to learn unique facial features for each person.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">4</div>
+          <div class="timeline-content glass-card">
+            <h3>Detecting Faces via Webcam</h3>
+            <p>During attendance, the live camera feed is scanned in real time to find and isolate human faces.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">5</div>
+          <div class="timeline-content glass-card">
+            <h3>Matching with Stored Data</h3>
+            <p>Each detected face is compared against the trained model to find the closest match.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">6</div>
+          <div class="timeline-content glass-card">
+            <h3>Marking Attendance</h3>
+            <p>Once identified, the student's name, ID, date, and exact time are logged instantly.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-marker">7</div>
+          <div class="timeline-content glass-card">
+            <h3>Saving to CSV / Database</h3>
+            <p>All records are saved into a CSV file or database — ready for download or analysis at any time.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FEATURES ===== -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">07</span>
+        <h2 class="section-title">Features of the System</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon-wrap"><span>⚡</span></div>
+          <h3>Real-Time Detection</h3>
+          <p>Detects and identifies faces instantly from the live camera stream.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon-wrap"><span>🤖</span></div>
+          <h3>Automatic Marking</h3>
+          <p>Attendance is recorded automatically — no buttons, no manual steps.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon-wrap"><span>🎨</span></div>
+          <h3>User-Friendly Interface</h3>
+          <p>Clean Streamlit dashboard makes it simple for anyone to use.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon-wrap"><span>📁</span></div>
+          <h3>Data Storage & Retrieval</h3>
+          <p>All records stored digitally — easily searchable and downloadable.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon-wrap"><span>🎯</span></div>
+          <h3>High Accuracy</h3>
+          <p>Advanced LBPH algorithm ensures reliable recognition even with minor changes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ADVANTAGES & LIMITATIONS ===== -->
+  <section class="section section-dark" id="advantages">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">08 & 09</span>
+        <h2 class="section-title">Advantages & Limitations</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="split-grid">
+        <div class="split-card advantages-card">
+          <h3>✅ Advantages</h3>
+          <ul>
+            <li><strong>Saves Time</strong> — Marks attendance in under a second per person.</li>
+            <li><strong>Prevents Proxy</strong> — Physical presence is mandatory; no faking possible.</li>
+            <li><strong>Contactless</strong> — Hygienic alternative to fingerprint scanners or pens.</li>
+            <li><strong>Easy to Use</strong> — Just stand in front of the camera — that's it.</li>
+            <li><strong>Digital Records</strong> — No paper, no lost registers, always backed up.</li>
+          </ul>
+        </div>
+        <div class="split-card limitations-card">
+          <h3>⚠️ Limitations</h3>
+          <ul>
+            <li><strong>Lighting Sensitivity</strong> — Very dark or bright environments reduce accuracy.</li>
+            <li><strong>Camera Quality</strong> — Low-resolution webcams may struggle with detection.</li>
+            <li><strong>Initial Setup</strong> — Registering every student's photos takes time initially.</li>
+            <li><strong>Occlusion</strong> — Heavy masks or face coverings can interfere with recognition.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FUTURE SCOPE ===== -->
+  <section class="section" id="future">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">10</span>
+        <h2 class="section-title">Future Scope</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="future-grid">
+        <div class="future-item glass-card">
+          <span class="future-icon">📱</span>
+          <h3>Mobile App Integration</h3>
+          <p>Build a companion app so parents and students can check attendance status on the go.</p>
+        </div>
+        <div class="future-item glass-card">
+          <span class="future-icon">☁️</span>
+          <h3>Cloud Database</h3>
+          <p>Move data to Firebase or MySQL cloud servers for access from anywhere in the world.</p>
+        </div>
+        <div class="future-item glass-card">
+          <span class="future-icon">😷</span>
+          <h3>Mask Detection</h3>
+          <p>Upgrade the AI model to recognize faces even with medical face masks on.</p>
+        </div>
+        <div class="future-item glass-card">
+          <span class="future-icon">🧬</span>
+          <h3>Deep Learning Models</h3>
+          <p>Use CNNs and deep learning for dramatically improved accuracy and speed.</p>
+        </div>
+        <div class="future-item glass-card">
+          <span class="future-icon">📹</span>
+          <h3>Multi-Camera System</h3>
+          <p>Deploy multiple cameras to cover large lecture halls and capture everyone simultaneously.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONCLUSION ===== -->
+  <section class="section section-dark" id="conclusion">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">11</span>
+        <h2 class="section-title">Conclusion</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="conclusion-box glass-card">
+        <p>The <strong>Smart Attendance System using Face Recognition</strong> is a highly effective, secure, and modern alternative to manual attendance tracking. By utilizing Python and AI libraries like OpenCV, this system successfully eliminates the core issues of traditional roll calls — including time wastage, proxy attendance, and human errors.</p>
+        <p>As educational institutions and corporate offices rapidly move toward digitalization, contactless and automated systems like this will become the industry standard for managing daily records reliably and efficiently.</p>
+        <p>This project demonstrates the practical application of computer vision and machine learning in solving real-world problems, making it an excellent learning experience for students entering the field of AI.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CODE SECTION ===== -->
+  <section class="section" id="code">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">12</span>
+        <h2 class="section-title">Code Explanation & Applications</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-dot red"></span>
+          <span class="code-dot yellow"></span>
+          <span class="code-dot green"></span>
+          <span class="code-title">face_detection.py</span>
+        </div>
+        <pre><code><span class="kw">import</span> cv2
+
+<span class="cm"># Load the pre-trained face detection model</span>
+face_cascade = cv2.<span class="fn">CascadeClassifier</span>(<span class="st">'haarcascade_frontalface_default.xml'</span>)
+
+<span class="cm"># Turn on the webcam</span>
+camera = cv2.<span class="fn">VideoCapture</span>(<span class="num">0</span>)
+
+<span class="kw">while</span> <span class="val">True</span>:
+    <span class="cm"># Read a frame from the webcam</span>
+    success, frame = camera.<span class="fn">read</span>()
+
+    <span class="cm"># Convert the frame to grayscale (faster processing)</span>
+    gray = cv2.<span class="fn">cvtColor</span>(frame, cv2.COLOR_BGR2GRAY)
+
+    <span class="cm"># Detect faces in the frame</span>
+    faces = face_cascade.<span class="fn">detectMultiScale</span>(gray, scaleFactor=<span class="num">1.1</span>, minNeighbors=<span class="num">5</span>)
+
+    <span class="cm"># Draw a green rectangle around each detected face</span>
+    <span class="kw">for</span> (x, y, w, h) <span class="kw">in</span> faces:
+        cv2.<span class="fn">rectangle</span>(frame, (x, y), (x+w, y+h), (<span class="num">0</span>, <span class="num">255</span>, <span class="num">0</span>), <span class="num">2</span>)
+
+    <span class="cm"># Show the video feed with rectangles</span>
+    cv2.<span class="fn">imshow</span>(<span class="st">'Smart Attendance System'</span>, frame)
+
+    <span class="cm"># Press 'q' to quit the webcam</span>
+    <span class="kw">if</span> cv2.<span class="fn">waitKey</span>(<span class="num">1</span>) & <span class="num">0xFF</span> == <span class="fn">ord</span>(<span class="st">'q'</span>):
+        <span class="kw">break</span>
+
+<span class="cm"># Clean up</span>
+camera.<span class="fn">release</span>()
+cv2.<span class="fn">destroyAllWindows</span>()</code></pre>
+      </div>
+
+      <h3 class="sub-heading">Real-World Applications</h3>
+      <div class="applications-grid">
+        <div class="app-card glass-card">
+          <span class="app-icon">🏫</span>
+          <h4>Schools & Universities</h4>
+          <p>Automates classroom attendance, saving 5–10 minutes daily per class session.</p>
+        </div>
+        <div class="app-card glass-card">
+          <span class="app-icon">🏢</span>
+          <h4>Corporate Offices</h4>
+          <p>Tracks employee check-in/check-out times at entry gates with full audit trails.</p>
+        </div>
+        <div class="app-card glass-card">
+          <span class="app-icon">🔐</span>
+          <h4>Security & Access Control</h4>
+          <p>Manages access to restricted zones by recognizing authorized personnel.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="logo-icon">🎯</span>
+          <span class="logo-text">SmartAttendAI</span>
+        </div>
+        <p class="footer-text">Smart Attendance System using Face Recognition — College Project Report</p>
+        <p class="footer-copy">© 2026 All rights reserved. Built with ❤️ for academic excellence.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
